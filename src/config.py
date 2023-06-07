@@ -13,39 +13,44 @@ For more information and usage examples, refer to the documentation or visit the
 """
 
 
+import os
+
+
 class BaseConfig:
     """
     Base Configuration
 
-    This class represents the base configuration for the application with common settings. 
+    Represents the base configuration for the application. Includes common settings. 
     """
     TESTING = False
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
 class DevelopmentConfig(BaseConfig):
     """
     Development Configuration
 
-    This class represents the configuration for the development environment.
+    Represents the configuration for the development environment.
 
     Inherits:
         BaseConfig: The base configuration class.
 
     """
-    pass
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
 
 
 class TestingConfig(BaseConfig):
     """
     Testing Configuration
 
-    This class represents the configuration for the testing environment.
+    Represents the configuration for the testing environment.
 
     Inherits:
         BaseConfig: The base configuration class.
 
     """
     TESTING = True
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_TEST_URL')
 
 
 class ProductionConfig(BaseConfig):
@@ -58,4 +63,4 @@ class ProductionConfig(BaseConfig):
         BaseConfig: The base configuration class.
 
     """
-    pass
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')

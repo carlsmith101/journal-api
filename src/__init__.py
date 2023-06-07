@@ -7,10 +7,13 @@ For more information, refer to the documentation or visit the project repository
 """
 
 import os
+import uuid
 
 
 from flask import Flask, jsonify
 from flask_restx import Resource, Api
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.dialects.postgresql import UUID
 
 
 # instantiate the app
@@ -21,6 +24,22 @@ api = Api(app)
 # set config
 app_settings = os.getenv('APP_SETTINGS')
 app.config.from_object(app_settings)
+
+# instantiate the db
+db = SQLAlchemy(app)
+
+
+class Entry(db.Model):
+    """
+    
+    """
+    __tablename__ = 'entries'
+    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    content = db.Column(db.String(2000), nullable=False)
+    date = db.Column(db.Date, nullable=False, unique=True, default=db.func.current_date())
+
+    def __init__(self, content):
+        self.content = content
 
 
 class Ping(Resource):
