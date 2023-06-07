@@ -6,8 +6,12 @@ This is the API for the journal application
 For more information, refer to the documentation or visit the project repository at: https://github.com/carlsmith101/journal-api
 """
 
+import os
+
+
 from flask import Flask, jsonify
 from flask_restx import Resource, Api
+
 
 # instantiate the app
 app = Flask(__name__)
@@ -15,7 +19,8 @@ app = Flask(__name__)
 api = Api(app)
 
 # set config
-app.config.from_object('src.config.DevelopmentConfig')
+app_settings = os.getenv('APP_SETTINGS')
+app.config.from_object(app_settings)
 
 
 class Ping(Resource):
