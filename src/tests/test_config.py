@@ -1,4 +1,8 @@
 """
+test_config
+
+This module contains unit tests for the application configuration.
+
 """
 
 
@@ -6,6 +10,11 @@ import os
 
 
 def test_development_config(test_app):
+    """
+    Tests the development configuration.
+
+    """
+
     test_app.config.from_object('src.config.DevelopmentConfig')
     assert test_app.config['SECRET_KEY'] == 'my_precious'
     assert not test_app.config['TESTING']
@@ -13,6 +22,11 @@ def test_development_config(test_app):
 
 
 def test_testing_config(test_app):
+    """
+    Tests the testing configuration.
+
+    """
+
     test_app.config.from_object('src.config.TestingConfig')
     assert test_app.config['SECRET_KEY'] == 'my_precious'
     assert test_app.config['TESTING']
@@ -20,6 +34,11 @@ def test_testing_config(test_app):
 
 
 def test_production_config(test_app):
+    """
+    Tests the production configuration.
+
+    """
+
     test_app.config.from_object('src.config.ProductionConfig')
     assert test_app.config['SECRET_KEY'] == 'my_precious'
     assert not test_app.config['TESTING']

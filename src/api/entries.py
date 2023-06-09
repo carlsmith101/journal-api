@@ -1,4 +1,8 @@
 """
+entries
+
+This module defines the API resources and endpoints for managing journal entries.
+
 """
 
 
@@ -9,24 +13,41 @@ from src import db
 from src.api.models import Entry
 from sqlalchemy.sql import func
 
-
+# add blueprint
 entries_blueprint = Blueprint('entries', __name__)
 api = Api(entries_blueprint)
 
-entry = api.model('Entry', {
+# define resource fields
+resource_fields = api.model('Entry', {
     'content': fields.String(required=True),
     'entry_date': fields.Date
 })
 
 
 class EntriesList(Resource):
+    """
+    EntriesList Resource
 
-    @api.marshal_with(entry, as_list=True)
+    Represents a collection of journal entries. Handles the endpoints for retrieving and creating journal entries.
+
+    """
+
+    @api.marshal_with(resource_fields, as_list=True)
     def get(self):
+        """
+        Retrieve all journal entries.
+
+        """
+
         return Entry.query.all(), 200
 
-    @api.expect(entry, validate=True)
+    @api.expect(resource_fields, validate=True)
     def post(self):
+        """
+        Add a new journal entry.
+
+        """
+
         post_data = request.get_json()
         content = post_data.get('content')
         response_object = {}
@@ -44,12 +65,21 @@ class EntriesList(Resource):
         return response_object, 201
 
 
-api.add_resource(EntriesList, '/entries')
-
 class Entries(Resource):
+    """
+    Entries Resource
+    
+    This resource represents a single journal entry and handles the endpoint for retrieving a single journal entry.
 
-    @api.marshal_with(entry)
+    """
+
+    @api.marshal_with(resource_fields)
     def get(self, date):
+        """
+        Retrieve a journal entry by date.
+
+        """
+
         entry = Entry.query.filter_by(entry_date=date).first()
 
         if not entry:
@@ -58,4 +88,5 @@ class Entries(Resource):
         return entry, 200
 
 
+api.add_resource(EntriesList, '/entries')
 api.add_resource(Entries, '/entries/<date>')

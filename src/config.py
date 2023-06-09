@@ -1,5 +1,5 @@
 """
-Application Configuration
+config
 
 This module defines the configuration classes for different environments in the application.
 
@@ -8,7 +8,7 @@ This module defines the configuration classes for different environments in the 
 - TestingConfig: Configuration class for the testing environment.
 - ProductionConfig: Configuration class for the production environment.
 
-For more information and usage examples, refer to the documentation or visit the project repository at: https://github.com/yourusername/yourproject
+For more information and usage examples, refer to the documentation or visit the [project repository](https://github.com/carlsmith101/journal-api).
 
 """
 

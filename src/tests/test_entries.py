@@ -1,4 +1,8 @@
 """
+test_entries
+
+This module contains functional tests for the 'entry' resource of the API.
+
 """
 
 
@@ -8,6 +12,13 @@ from datetime import date
 
 
 def test_add_entry(test_app, test_database):
+    """
+    Test case for the add entry endpoint.
+
+    This test verifies the behavior of the add entry endpoint when a valid JSON payload is provided.
+ 
+    """
+
     # Arrange
     client = test_app.test_client()
 
@@ -27,6 +38,13 @@ def test_add_entry(test_app, test_database):
 
 
 def test_add_entry_invalid_json(test_app, test_database):
+    """
+    Test case for the add entry endpoint.
+
+    This test verifies the behavior of the add entry endpoint when an invalid JSON payload is provided.
+ 
+    """
+
     # Arrange
     client = test_app.test_client()
 
@@ -44,6 +62,13 @@ def test_add_entry_invalid_json(test_app, test_database):
 
 
 def test_add_entry_invalid_json_keys(test_app, test_database):
+    """
+    Test case for the add entry endpoint.
+
+    This test verifies the behavior of the add entry endpoint when a JSON payload with incorrect keys is provided.
+ 
+    """
+
     # Arrange
     client = test_app.test_client()
 
@@ -63,6 +88,13 @@ def test_add_entry_invalid_json_keys(test_app, test_database):
 
 
 def test_add_entry_duplicate_date(test_app, test_database):
+    """
+    Test case for the add entry endpoint.
+
+    This test verifies the behavior of the add entry endpoint when attempting to add a journal entry with a duplicate date.
+ 
+    """
+
     # Arrange
     client = test_app.test_client()
 
@@ -90,6 +122,13 @@ def test_add_entry_duplicate_date(test_app, test_database):
 
 
 def test_get_entry(test_app, test_database, add_entry):
+    """
+    Test case for the get entry endpoint.
+
+    This test verifies the behavior of the get entry endpoint when retrieving an existing journal entry.
+ 
+    """
+
     # Arrange
     entry = add_entry('Dear Diary. This was a great day')
 
@@ -105,6 +144,13 @@ def test_get_entry(test_app, test_database, add_entry):
 
 
 def test_get_nonexistant_entry(test_app, test_database):
+    """
+    Test case for the get entry endpoint.
+
+    This test verifies the behavior of the get entry endpoint when attempting to retrieve an non-existant journal entry.
+ 
+    """
+
     # Arrange
     client = test_app.test_client()
 
@@ -117,7 +163,13 @@ def test_get_nonexistant_entry(test_app, test_database):
     assert 'Journal entry on date 2023-01-01 does not exist' in data['message']
 
 
-def test_get_all_entries(test_app, test_database, add_entry):
+def test_get_entries(test_app, test_database, add_entry):
+    """
+    Test case for the get entries endpoint.
+
+    This test verifies the behavior of the get entries endpoint when retrieving all existing journal entries.
+ 
+    """
     # Arrange
     add_entry('Dear diary, this is my first entry', date(2023, 1, 1))
     add_entry('Dear diary, this is my second entry', date(2023, 1, 2))
